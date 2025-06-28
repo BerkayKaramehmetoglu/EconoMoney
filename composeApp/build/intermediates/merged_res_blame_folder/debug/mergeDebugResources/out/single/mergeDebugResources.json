@@ -1,0 +1,58 @@
+[
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/drawable_ic_launcher_background.xml.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "org.berkaykaramehmetoglu.economoney.composeApp-debug-54:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "org.berkaykaramehmetoglu.economoney.composeApp-androidMain-56:/mipmap-hdpi/ic_launcher.png"
+    }
+]
