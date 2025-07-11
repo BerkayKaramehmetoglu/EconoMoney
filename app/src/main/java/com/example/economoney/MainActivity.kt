@@ -5,8 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.economoney.ui.App
+import com.example.economoney.ui.navigate.Screens
 import com.example.economoney.ui.theme.EconoMoneyTheme
 
 class MainActivity : ComponentActivity() {

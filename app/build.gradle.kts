@@ -59,4 +59,8 @@ dependencies {
 
     //navigation
     implementation(libs.androidx.navigation.compose)
+
+    //material design
+    implementation(libs.material3)
+
 }
