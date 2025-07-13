@@ -12,7 +12,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -82,7 +81,7 @@ fun App(navHostController: NavHostController) {
             )
         },
         bottomBar = {
-            NavigationBar {
+            NavigationBar(containerColor = colorResource(id = R.color.white)) {
                 navItemList.forEachIndexed { index, navItem ->
                     NavigationBarItem(
                         selected = navItem.router == currentPage,
@@ -97,11 +96,15 @@ fun App(navHostController: NavHostController) {
                         },
                         icon = {
                             Icon(
+                                modifier = Modifier.size(32.dp),
                                 imageVector = navItem.icon,
-                                contentDescription = navItem.label
+                                contentDescription = navItem.label,
+                                tint = colorResource(id = R.color.black)
                             )
                         },
-                        label = { Text(text = navItem.label) }
+                        label = {
+                            Text(text = navItem.label)
+                        }
                     )
                 }
             }
