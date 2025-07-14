@@ -20,9 +20,8 @@ class HomeViewModel @Inject constructor(var econoMoneyRepo: EconoMoneyRepo) : Vi
         getCoins()
     }
 
-    fun getCoins() {
+    private fun getCoins() {
         viewModelScope.launch {
-            println(econoMoneyRepo.getCoins())
             _coinsList.value = econoMoneyRepo.getCoins()
         }
     }
