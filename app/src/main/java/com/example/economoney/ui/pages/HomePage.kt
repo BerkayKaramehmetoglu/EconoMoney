@@ -1,11 +1,13 @@
 package com.example.economoney.ui.pages
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,10 +27,12 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.economoney.R
+import com.example.economoney.ui.charts.LineCharts
 
 @SuppressLint("DefaultLocale")
 @Composable
@@ -70,12 +74,13 @@ fun HomePage(
                                 .padding(8.dp),
                         )
                     }
-                    Spacer(modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.size(8.dp))
                     coin.name?.let {
                         Text(
                             text = it,
                             fontWeight = FontWeight.SemiBold,
-                            color = colorResource(R.color.black)
+                            color = colorResource(R.color.black),
+                            fontSize = 20.sp
                         )
                     }
                     Spacer(modifier = Modifier.size(8.dp))
@@ -83,7 +88,8 @@ fun HomePage(
                         Text(
                             text = it,
                             fontWeight = FontWeight.Light,
-                            color = colorResource(R.color.black)
+                            color = colorResource(R.color.black),
+                            fontSize = 18.sp
                         )
                     }
                     coin.rank?.let {
@@ -105,18 +111,54 @@ fun HomePage(
                     modifier = Modifier
                         .align(Alignment.End)
                         .padding(end = 16.dp, bottom = 16.dp)
+                        .fillMaxWidth(0.7f)
                 ) {
-                    coin.price?.let {
-                        val priceDouble = coin.price.toDouble()
-                        val formattedString = String.format("%.2f", priceDouble)
-                        Text(
-                            text = "$$formattedString",
-                            modifier = Modifier
-                                .padding(16.dp),
-                            textAlign = TextAlign.Center,
-                            color = colorResource(R.color.black),
-                            fontWeight = FontWeight.Medium
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                    ) {
+                        LineCharts(
+                            coins = coin, modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                                .height(100.dp)
                         )
+
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 8.dp)
+                        ) {
+                            coin.price?.let {
+                                val priceDouble = coin.price.toDouble()
+                                val formattedString = String.format("%.2f", priceDouble)
+                                Text(
+                                    text = "$$formattedString",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.End,
+                                    color = colorResource(R.color.black),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 18.sp
+                                )
+                            }
+                            Spacer(modifier = Modifier.size(8.dp))
+                            coin.change?.let {
+                                Text(
+                                    text = "${it}%",
+                                    modifier = Modifier
+                                        .padding(top = 4.dp)
+                                        .fillMaxWidth(),
+                                    textAlign = TextAlign.End,
+                                    color = if (coin.change.toDouble() < 0)
+                                        colorResource(R.color.red)
+                                    else
+                                        colorResource(R.color.green),
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 16.sp
+                                )
+                            }
+                        }
                     }
                 }
             }

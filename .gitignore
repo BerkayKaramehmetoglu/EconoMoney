@@ -27,3 +27,4 @@ replay_pid*
 .kotlin/
 local.properties
 *.properties
+build/reports/problems
