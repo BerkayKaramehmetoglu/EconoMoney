@@ -1,4 +1,4 @@
-package com.example.economoney.ui.navigate
+package com.example.economoney.ui.navigate.item
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
