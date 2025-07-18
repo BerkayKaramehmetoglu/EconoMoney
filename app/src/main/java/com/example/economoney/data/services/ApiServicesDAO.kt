@@ -8,6 +8,9 @@ interface ApiServicesDAO {
 
     @GET("coins")
     suspend fun getCoins(
-        @Query("timePeriod") time: String
+        @Query("limit") limit: Int,
+        @Query("timePeriod") time: String,
+        @Query("orderDirection") orderDirection: String,
+        @Query("orderBy") orderBy: String,
     ): AllCoins
 }

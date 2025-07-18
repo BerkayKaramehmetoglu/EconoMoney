@@ -19,22 +19,42 @@ class HomeViewModel @Inject constructor(var econoMoneyRepo: EconoMoneyRepo) : Vi
     val coinsList: State<List<Coins>> = _coinsList
 
     private val _time = MutableStateFlow("24h")
+    val time: StateFlow<String> = _time
 
-    var time: String
-        get() = _time.value
-        set(value) {
-            _time.value = value
-        }
+    private val _orderDirection = MutableStateFlow("desc")
+    val orderDirection: StateFlow<String> = _orderDirection
 
-    val timeFlow: StateFlow<String> = _time
+    private val _orderBy = MutableStateFlow("marketCap")
+    val oderBy: StateFlow<String> = _orderBy
 
     init {
-        getCoins(time = _time.value)
+        getCoins(
+            limit = 100,
+            time = _time.value,
+            orderDirection = _orderDirection.value,
+            orderBy = _orderBy.value
+        )
     }
 
-    fun getCoins(time: String) {
-        viewModelScope.launch {
-            _coinsList.value = econoMoneyRepo.getCoins(time)
+    fun getCoins(limit: Int, time: String, orderDirection: String, orderBy: String) {
+        try {
+            viewModelScope.launch {
+                _coinsList.value = econoMoneyRepo.getCoins(limit, time, orderDirection, orderBy)
+            }
+        } catch (e: Exception) {
+            println(e)
         }
+    }
+
+    fun setTime(newTime: String) {
+        _time.value = newTime
+    }
+
+    fun setOrderDirection(newOrderDirection: String) {
+        _orderDirection.value = newOrderDirection
+    }
+
+    fun setOrderBy(newOrderBy: String) {
+        _orderBy.value = newOrderBy
     }
 }

@@ -2,17 +2,24 @@ package com.example.economoney.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -23,18 +30,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -56,27 +67,41 @@ fun App(
     homeViewModel: HomeViewModel,
     navHostController: NavHostController
 ) {
+    val time by homeViewModel.time.collectAsState()
     var expanded by remember { mutableStateOf(false) }
+    var expandedOrder by remember { mutableStateOf(false) }
+
+    val radioOptionsDirection = listOf("Decreasing Order" to "desc", "Ascending Order" to "asc")
+    val (selectedOptionDirection, onOptionSelectedDirection) = remember {
+        mutableStateOf(radioOptionsDirection[0])
+    }
+
+    val radioOptionsBy = listOf(
+        "Price" to "price",
+        "Market Cap" to "marketCap",
+        "Hours Volume" to "24hVolume",
+        "Change" to "change"
+    )
+    val (selectedOptionBy, onOptionSelectedBy) = remember { mutableStateOf(radioOptionsBy[1]) }
 
     val backStackEntry = navHostController.currentBackStackEntryAsState().value
     val currentPage = backStackEntry?.destination?.route
 
     val navItemList = listOf(
-        NavItem("Home", Icons.Filled.Home, router = Screens.Home.router),
-        NavItem("Settings", Icons.Filled.Settings, router = Screens.Settings.router)
+        NavItem(label = "Home", Icons.Filled.Home, router = Screens.Home.router),
+        NavItem(label = "Settings", Icons.Filled.Settings, router = Screens.Settings.router)
     )
-
     val menuItemList = listOf(
-        MenuItem(label = "1h"),
-        MenuItem(label = "3h"),
-        MenuItem(label = "12h"),
-        MenuItem(label = "24h"),
-        MenuItem(label = "7d"),
-        MenuItem(label = "30d"),
-        MenuItem(label = "3m"),
-        MenuItem(label = "1y"),
-        MenuItem(label = "3y"),
-        MenuItem(label = "5y"),
+        MenuItem(label = "1 Hours" to "1h"),
+        MenuItem(label = "3 Hours" to "3h"),
+        MenuItem(label = "12 Hours" to "12h"),
+        MenuItem(label = "24 Hours" to "24h"),
+        MenuItem(label = "7 Day" to "7d"),
+        MenuItem(label = "30 Day" to "30d"),
+        MenuItem(label = "3 Month" to "3m"),
+        MenuItem(label = "1 Year" to "1y"),
+        MenuItem(label = "3 Year" to "3y"),
+        MenuItem(label = "5 Year" to "5y"),
     )
 
     Scaffold(
@@ -107,6 +132,114 @@ fun App(
                                 tint = colorResource(id = R.color.black)
                             )
                         }
+                    } else {
+                        Box(
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .clickable {
+                                        expandedOrder = !expandedOrder
+                                    },
+                                imageVector = Icons.Filled.Build,
+                                contentDescription = "Build Icon",
+                                tint = colorResource(id = R.color.black)
+                            )
+                            DropdownMenu(
+                                expanded = expandedOrder,
+                                onDismissRequest = { expandedOrder = false }
+                            ) {
+                                DropdownMenuItem(
+                                    text = {
+                                        Column(
+                                            Modifier
+                                                .selectableGroup()
+                                                .fillMaxHeight(),
+                                            verticalArrangement = Arrangement.Center
+                                        ) {
+                                            Text(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(bottom = 8.dp),
+                                                text = "Order Direction",
+                                                fontSize = 16.sp,
+                                                textAlign = TextAlign.Center
+                                            )
+                                            radioOptionsDirection.forEach { radio ->
+                                                Row(
+                                                    Modifier
+                                                        .selectable(
+                                                            selected = (radio == selectedOptionDirection),
+                                                            onClick = {
+                                                                onOptionSelectedDirection(radio)
+                                                                homeViewModel.setOrderDirection(
+                                                                    radio.second
+                                                                )
+                                                            },
+                                                            role = Role.RadioButton
+                                                        ),
+                                                    verticalAlignment = Alignment.CenterVertically
+                                                ) {
+                                                    RadioButton(
+                                                        selected = (radio == selectedOptionDirection),
+                                                        onClick = {
+                                                            onOptionSelectedDirection(radio)
+                                                            homeViewModel.setOrderDirection(radio.second)
+                                                        }
+                                                    )
+                                                    Text(text = radio.first)
+                                                }
+                                            }
+                                        }
+                                    },
+                                    onClick = {/* Don't use anymore */ }
+                                )
+                                Spacer(modifier = Modifier.size(24.dp))
+                                DropdownMenuItem(
+                                    text = {
+                                        Column(
+                                            Modifier
+                                                .selectableGroup()
+                                                .fillMaxSize(),
+                                        ) {
+                                            Text(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(bottom = 8.dp),
+                                                text = "Order By",
+                                                fontSize = 16.sp,
+                                                textAlign = TextAlign.Center
+                                            )
+                                            radioOptionsBy.forEach { radio ->
+                                                Row(
+                                                    Modifier
+                                                        .selectable(
+                                                            selected = (radio == selectedOptionBy),
+                                                            onClick = {
+                                                                onOptionSelectedBy(radio)
+                                                                homeViewModel.setOrderBy(radio.second)
+                                                            },
+                                                            role = Role.RadioButton
+                                                        ),
+                                                    verticalAlignment = Alignment.CenterVertically
+                                                ) {
+                                                    RadioButton(
+                                                        selected = (radio == selectedOptionBy),
+                                                        onClick = {
+                                                            onOptionSelectedBy(radio)
+                                                            homeViewModel.setOrderBy(radio.second)
+                                                        }
+                                                    )
+                                                    Text(text = radio.first)
+                                                }
+                                            }
+                                        }
+                                    },
+                                    onClick = {/* Don't use anymore*/ }
+                                )
+                            }
+                        }
                     }
                 },
                 actions = {
@@ -118,7 +251,7 @@ fun App(
                             modifier = Modifier.clickable {
                                 expanded = !expanded
                             },
-                            text = homeViewModel.time,
+                            text = time,
                             fontSize = 20.sp,
                             color = colorResource(R.color.black)
                         )
@@ -131,19 +264,27 @@ fun App(
                                     .height(200.dp)
                                     .verticalScroll(rememberScrollState())
                             ) {
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp),
+                                    text = "Time",
+                                    fontSize = 16.sp,
+                                    textAlign = TextAlign.Center
+                                )
                                 menuItemList.forEach { menuItem ->
                                     DropdownMenuItem(
                                         text = {
                                             Text(
                                                 modifier = Modifier.fillMaxWidth(),
-                                                text = menuItem.label,
+                                                text = menuItem.label.first,
                                                 fontSize = 16.sp,
                                                 textAlign = TextAlign.Center,
                                                 color = colorResource(R.color.black)
                                             )
                                         },
                                         onClick = {
-                                            homeViewModel.time = menuItem.label
+                                            homeViewModel.setTime(menuItem.label.second)
                                             expanded = false
                                         }
                                     )
@@ -156,7 +297,7 @@ fun App(
         },
         bottomBar = {
             NavigationBar(containerColor = colorResource(id = R.color.white)) {
-                navItemList.forEachIndexed { index, navItem ->
+                navItemList.forEachIndexed { _, navItem ->
                     NavigationBarItem(
                         selected = navItem.router == currentPage,
                         onClick = {

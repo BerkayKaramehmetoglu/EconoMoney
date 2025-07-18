@@ -42,10 +42,12 @@ fun HomePage(
     homeViewModel: HomeViewModel
 ) {
     val coins by homeViewModel.coinsList
-    val time by homeViewModel.timeFlow.collectAsState()
+    val time by homeViewModel.time.collectAsState()
+    val orderDirection by homeViewModel.orderDirection.collectAsState()
+    val orderBy by homeViewModel.oderBy.collectAsState()
 
-    LaunchedEffect(time) {
-        homeViewModel.getCoins(time)
+    LaunchedEffect(time, orderDirection, orderBy) {
+        homeViewModel.getCoins(limit = 100, time, orderDirection, orderBy)
     }
 
     LazyColumn(
