@@ -1,7 +1,6 @@
 package com.example.economoney.ui.navigate
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,10 +9,9 @@ import com.example.economoney.ui.pages.SettingsPage
 import com.example.economoney.viewmodels.HomeViewModel
 
 @Composable
-fun SetUpNavHost(navHostController: NavHostController) {
+fun SetUpNavHost(navHostController: NavHostController, homeViewModel: HomeViewModel) {
     NavHost(navHostController, startDestination = Screens.Home.router) {
         composable(Screens.Home.router) {
-            val homeViewModel: HomeViewModel = hiltViewModel()
             HomePage(homeViewModel = homeViewModel)
         }
         composable(Screens.Settings.router) {

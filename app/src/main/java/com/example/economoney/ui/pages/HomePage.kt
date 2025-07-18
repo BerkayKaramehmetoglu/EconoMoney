@@ -19,6 +19,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +42,11 @@ fun HomePage(
     homeViewModel: HomeViewModel
 ) {
     val coins by homeViewModel.coinsList
+    val time by homeViewModel.timeFlow.collectAsState()
+
+    LaunchedEffect(time) {
+        homeViewModel.getCoins(time)
+    }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),

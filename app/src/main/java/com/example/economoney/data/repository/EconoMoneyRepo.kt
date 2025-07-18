@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 class EconoMoneyRepo @Inject constructor(var econoMoneyDataSource: EconoMoneyDataSource) {
 
-    suspend fun getCoins(): List<Coins> = econoMoneyDataSource.getCoins()
+    suspend fun getCoins(time: String): List<Coins> = econoMoneyDataSource.getCoins(time)
 }

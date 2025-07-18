@@ -101,4 +101,7 @@ dependencies {
 
     //YCharts
     implementation(libs.ycharts)
+
+    //Lifecycle
+    implementation(libs.androidx.lifecycle.runtime.compose)
 }

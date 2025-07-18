@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class EconoMoneyDataSource @Inject constructor(var apiServicesDAO: ApiServicesDAO) {
 
-    suspend fun getCoins(): List<Coins> = withContext(Dispatchers.IO) {
-        return@withContext apiServicesDAO.getCoins().data.coins
+    suspend fun getCoins(time: String): List<Coins> = withContext(Dispatchers.IO) {
+        return@withContext apiServicesDAO.getCoins(time).data.coins
     }
 }

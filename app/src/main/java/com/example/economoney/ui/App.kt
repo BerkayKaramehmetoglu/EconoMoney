@@ -1,14 +1,18 @@
 package com.example.economoney.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -17,7 +21,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -35,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -44,10 +48,14 @@ import com.example.economoney.ui.navigate.item.NavItem
 import com.example.economoney.ui.navigate.Screens
 import com.example.economoney.ui.navigate.SetUpNavHost
 import com.example.economoney.ui.navigate.item.MenuItem
+import com.example.economoney.viewmodels.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navHostController: NavHostController) {
+fun App(
+    homeViewModel: HomeViewModel,
+    navHostController: NavHostController
+) {
     var expanded by remember { mutableStateOf(false) }
 
     val backStackEntry = navHostController.currentBackStackEntryAsState().value
@@ -59,8 +67,16 @@ fun App(navHostController: NavHostController) {
     )
 
     val menuItemList = listOf(
-        MenuItem(label = "24H", selected = true),
-        MenuItem(label = "7d", selected = false)
+        MenuItem(label = "1h"),
+        MenuItem(label = "3h"),
+        MenuItem(label = "12h"),
+        MenuItem(label = "24h"),
+        MenuItem(label = "7d"),
+        MenuItem(label = "30d"),
+        MenuItem(label = "3m"),
+        MenuItem(label = "1y"),
+        MenuItem(label = "3y"),
+        MenuItem(label = "5y"),
     )
 
     Scaffold(
@@ -94,38 +110,48 @@ fun App(navHostController: NavHostController) {
                     }
                 },
                 actions = {
-                    Box {
-                        IconButton(
-                            colors = IconButtonDefaults.iconButtonColors(
-                                contentColor = colorResource(R.color.black)
-                            ),
-                            onClick = { expanded = !expanded }
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(32.dp),
-                                imageVector = Icons.Filled.DateRange,
-                                contentDescription = "More Time"
-                            )
-                        }
+                    Box(
+                        modifier = Modifier
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            modifier = Modifier.clickable {
+                                expanded = !expanded
+                            },
+                            text = homeViewModel.time,
+                            fontSize = 20.sp,
+                            color = colorResource(R.color.black)
+                        )
                         DropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false }
                         ) {
-                            menuItemList.forEach { option ->
-                                DropdownMenuItem(
-                                    text = {
-                                        Text(
-                                            text = option.label,
-                                            color = if (option.selected) colorResource(R.color.green)
-                                            else colorResource(R.color.black)
-                                        )
-                                    },
-                                    onClick = { /* Do something... */ }
-                                )
+                            Column(
+                                modifier = Modifier
+                                    .height(200.dp)
+                                    .verticalScroll(rememberScrollState())
+                            ) {
+                                menuItemList.forEach { menuItem ->
+                                    DropdownMenuItem(
+                                        text = {
+                                            Text(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                text = menuItem.label,
+                                                fontSize = 16.sp,
+                                                textAlign = TextAlign.Center,
+                                                color = colorResource(R.color.black)
+                                            )
+                                        },
+                                        onClick = {
+                                            homeViewModel.time = menuItem.label
+                                            expanded = false
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
-                },
+                }
             )
         },
         bottomBar = {
@@ -163,7 +189,7 @@ fun App(navHostController: NavHostController) {
                 .padding(innerPadding)
                 .background(Color.White)
         ) {
-            SetUpNavHost(navHostController = navHostController)
+            SetUpNavHost(navHostController = navHostController, homeViewModel = homeViewModel)
         }
     }
 }
