@@ -1,6 +1,7 @@
 package com.example.economoney.ui.pages
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -30,15 +31,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.economoney.R
 import com.example.economoney.ui.charts.LineCharts
+import com.example.economoney.ui.navigate.Screens
 
 @SuppressLint("DefaultLocale")
 @Composable
 fun HomePage(
+    navHostController: NavHostController,
     homeViewModel: HomeViewModel
 ) {
     val coins by homeViewModel.coinsList
@@ -56,10 +60,18 @@ fun HomePage(
         contentPadding = PaddingValues(16.dp)
     ) {
         items(coins) { coin ->
+            val cleanedCoin = coin.copy(sparkline = coin.sparkline?.filterNotNull())
             ElevatedCard(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp),
+                    .padding(top = 16.dp)
+                    .clickable {
+                        navHostController.navigate(
+                            Screens.Detail(
+                                coins = cleanedCoin
+                            )
+                        )
+                    },
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 16.dp
                 ),
