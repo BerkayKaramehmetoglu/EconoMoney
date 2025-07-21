@@ -243,61 +243,70 @@ fun App(
                     }
                 },
                 actions = {
-                    Box(
-                        modifier = Modifier
-                            .padding(16.dp)
-                    ) {
+                    if (currentPage == Screens.Home.router) {
+                        Box(
+                            modifier = Modifier
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                modifier = Modifier.clickable {
+                                    expanded = !expanded
+                                },
+                                text = time,
+                                fontSize = 20.sp,
+                                color = colorResource(R.color.black)
+                            )
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .height(200.dp)
+                                        .verticalScroll(rememberScrollState())
+                                ) {
+                                    Text(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(bottom = 8.dp),
+                                        text = "Time",
+                                        fontSize = 16.sp,
+                                        textAlign = TextAlign.Center
+                                    )
+                                    menuItemList.forEach { menuItem ->
+                                        DropdownMenuItem(
+                                            text = {
+                                                Text(
+                                                    modifier = Modifier.fillMaxWidth(),
+                                                    text = menuItem.label.first,
+                                                    fontSize = 16.sp,
+                                                    textAlign = TextAlign.Center,
+                                                    color = colorResource(R.color.black)
+                                                )
+                                            },
+                                            onClick = {
+                                                homeViewModel.setTime(menuItem.label.second)
+                                                expanded = false
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    } else {
                         Text(
-                            modifier = Modifier.clickable {
-                                expanded = !expanded
-                            },
+                            modifier = Modifier.padding(16.dp),
                             text = time,
                             fontSize = 20.sp,
                             color = colorResource(R.color.black)
                         )
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false }
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .height(200.dp)
-                                    .verticalScroll(rememberScrollState())
-                            ) {
-                                Text(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(bottom = 8.dp),
-                                    text = "Time",
-                                    fontSize = 16.sp,
-                                    textAlign = TextAlign.Center
-                                )
-                                menuItemList.forEach { menuItem ->
-                                    DropdownMenuItem(
-                                        text = {
-                                            Text(
-                                                modifier = Modifier.fillMaxWidth(),
-                                                text = menuItem.label.first,
-                                                fontSize = 16.sp,
-                                                textAlign = TextAlign.Center,
-                                                color = colorResource(R.color.black)
-                                            )
-                                        },
-                                        onClick = {
-                                            homeViewModel.setTime(menuItem.label.second)
-                                            expanded = false
-                                        }
-                                    )
-                                }
-                            }
-                        }
                     }
                 }
             )
         },
         bottomBar = {
             NavigationBar(containerColor = colorResource(id = R.color.white)) {
-                navItemList.forEachIndexed { _, navItem ->
+                navItemList.forEach { navItem ->
                     NavigationBarItem(
                         selected = navItem.router == currentPage,
                         onClick = {
