@@ -13,4 +13,10 @@ interface ApiServicesDAO {
         @Query("orderDirection") orderDirection: String,
         @Query("orderBy") orderBy: String,
     ): AllCoins
+
+    @GET("coins/trending")
+    suspend fun getTrendCoins(
+        @Query("limit") limit: Int,
+        @Query("timePeriod") time: String
+    ): AllCoins
 }

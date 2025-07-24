@@ -22,6 +22,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -42,7 +43,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -60,11 +60,13 @@ import com.example.economoney.ui.navigate.Screens
 import com.example.economoney.ui.navigate.SetUpNavHost
 import com.example.economoney.ui.navigate.item.MenuItem
 import com.example.economoney.viewmodels.HomeViewModel
+import com.example.economoney.viewmodels.TrendViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(
     homeViewModel: HomeViewModel,
+    trendViewModel: TrendViewModel,
     navHostController: NavHostController
 ) {
     val time by homeViewModel.time.collectAsState()
@@ -89,6 +91,7 @@ fun App(
 
     val navItemList = listOf(
         NavItem(label = "Home", Icons.Filled.Home, router = Screens.Home.router),
+        NavItem(label = "Trend", Icons.Filled.Star, router = Screens.Trend.router),
         NavItem(label = "Settings", Icons.Filled.Settings, router = Screens.Settings.router)
     )
     val menuItemList = listOf(
@@ -305,7 +308,7 @@ fun App(
             )
         },
         bottomBar = {
-            NavigationBar(containerColor = colorResource(id = R.color.white)) {
+            NavigationBar(containerColor = colorResource(R.color.white)) {
                 navItemList.forEach { navItem ->
                     NavigationBarItem(
                         selected = navItem.router == currentPage,
@@ -323,7 +326,7 @@ fun App(
                                 modifier = Modifier.size(32.dp),
                                 imageVector = navItem.icon,
                                 contentDescription = navItem.label,
-                                tint = colorResource(id = R.color.black)
+                                tint = colorResource(R.color.black)
                             )
                         },
                         label = {
@@ -337,9 +340,9 @@ fun App(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .background(Color.White)
+                .background(color = colorResource(R.color.white))
         ) {
-            SetUpNavHost(navHostController = navHostController, homeViewModel = homeViewModel)
+            SetUpNavHost(navHostController = navHostController, homeViewModel = homeViewModel, trendViewModel = trendViewModel)
         }
     }
 }

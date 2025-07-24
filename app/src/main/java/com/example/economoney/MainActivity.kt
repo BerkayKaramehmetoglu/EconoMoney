@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.economoney.ui.App
 import com.example.economoney.ui.theme.EconoMoneyTheme
 import com.example.economoney.viewmodels.HomeViewModel
+import com.example.economoney.viewmodels.TrendViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,8 +22,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             EconoMoneyTheme {
                 val homeViewModel: HomeViewModel = hiltViewModel()
+                val trendViewModel: TrendViewModel = hiltViewModel()
                 navHostController = rememberNavController()
-                App(homeViewModel = homeViewModel, navHostController = navHostController)
+
+                App(
+                    homeViewModel = homeViewModel,
+                    navHostController = navHostController,
+                    trendViewModel = trendViewModel
+                )
             }
         }
     }

@@ -28,4 +28,5 @@ class AppModule {
     @Singleton
     fun provideApiServicesDAO(): ApiServicesDAO =
         ApiUtils.apiServicesDAO()
+
 }

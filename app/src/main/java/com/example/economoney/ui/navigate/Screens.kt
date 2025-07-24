@@ -14,5 +14,8 @@ sealed class Screens(val router: String) {
     ) : Screens("detail_screen")
 
     @Serializable
+    data object Trend : Screens("trend_screen")
+
+    @Serializable
     data object Settings : Screens("settings_screen")
 }

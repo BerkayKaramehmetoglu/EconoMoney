@@ -1,5 +1,6 @@
 package com.example.economoney.data.datasource
 
+import com.example.economoney.data.entity.AllCoins
 import com.example.economoney.data.entity.Coins
 import com.example.economoney.data.services.ApiServicesDAO
 import kotlinx.coroutines.Dispatchers
@@ -22,4 +23,8 @@ class EconoMoneyDataSource @Inject constructor(var apiServicesDAO: ApiServicesDA
                 orderBy
             ).data.coins
         }
+
+    suspend fun getTrendCoins(limit: Int, time: String): AllCoins = withContext(Dispatchers.IO) {
+        return@withContext apiServicesDAO.getTrendCoins(limit, time)
+    }
 }
