@@ -1,6 +1,5 @@
 package com.example.economoney.ui.navigate
 
-import com.example.economoney.data.entity.Coins
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,7 +9,7 @@ sealed class Screens(val router: String) {
 
     @Serializable
     data class Detail(
-        val coins: Coins
+        val uuid: String
     ) : Screens("detail_screen")
 
     @Serializable

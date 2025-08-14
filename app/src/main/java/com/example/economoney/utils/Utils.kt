@@ -29,7 +29,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.economoney.R
-import com.example.economoney.data.entity.Coins
+import com.example.economoney.data.entity.coins.Coins
 import com.example.economoney.ui.charts.LineCharts
 import com.example.economoney.ui.navigate.Screens
 
@@ -38,6 +38,19 @@ object Utils {
     fun coinColor(coins: Coins, color: (Color) -> Unit) {
         try {
             val parsedColor = coins.color?.let { Colors.valueOf(it.toColorInt()) }
+            if (parsedColor != null) {
+                color(Color(parsedColor.toArgb()))
+            } else {
+                color(Color.Black)
+            }
+        } catch (e: Exception) {
+            println(e)
+        }
+    }
+
+    fun coinColor(colors: String?, color: (Color) -> Unit) {
+        try {
+            val parsedColor = colors?.let { Colors.valueOf(it.toColorInt()) }
             if (parsedColor != null) {
                 color(Color(parsedColor.toArgb()))
             } else {
@@ -63,7 +76,7 @@ object Utils {
                 .clickable {
                     navHostController.navigate(
                         Screens.Detail(
-                            coins = cleanedCoin
+                            uuid = cleanedCoin.uuid!!
                         )
                     )
                 },

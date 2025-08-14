@@ -1,7 +1,9 @@
 package com.example.economoney.data.services
 
-import com.example.economoney.data.entity.AllCoins
+import com.example.economoney.data.entity.coins.AllCoins
+import com.example.economoney.data.entity.details.DetailAllCoin
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiServicesDAO {
@@ -19,4 +21,11 @@ interface ApiServicesDAO {
         @Query("limit") limit: Int,
         @Query("timePeriod") time: String
     ): AllCoins
+
+    @GET("coin/{uuid}")
+    suspend fun getDetails(
+        @Path("uuid") uuid: String,
+        @Query("timePeriod") time: String
+    ): DetailAllCoin
+
 }

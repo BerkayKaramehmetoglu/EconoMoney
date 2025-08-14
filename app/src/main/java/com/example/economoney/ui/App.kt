@@ -59,6 +59,7 @@ import com.example.economoney.ui.navigate.item.NavItem
 import com.example.economoney.ui.navigate.Screens
 import com.example.economoney.ui.navigate.SetUpNavHost
 import com.example.economoney.ui.navigate.item.MenuItem
+import com.example.economoney.viewmodels.DetailViewModel
 import com.example.economoney.viewmodels.HomeViewModel
 import com.example.economoney.viewmodels.TrendViewModel
 
@@ -67,7 +68,8 @@ import com.example.economoney.viewmodels.TrendViewModel
 fun App(
     homeViewModel: HomeViewModel,
     trendViewModel: TrendViewModel,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    detailViewModel: DetailViewModel
 ) {
     val time by homeViewModel.time.collectAsState()
     var expanded by remember { mutableStateOf(false) }
@@ -342,7 +344,12 @@ fun App(
                 .padding(innerPadding)
                 .background(color = colorResource(R.color.white))
         ) {
-            SetUpNavHost(navHostController = navHostController, homeViewModel = homeViewModel, trendViewModel = trendViewModel)
+            SetUpNavHost(
+                navHostController = navHostController,
+                homeViewModel = homeViewModel,
+                trendViewModel = trendViewModel,
+                detailViewModel = detailViewModel
+            )
         }
     }
 }

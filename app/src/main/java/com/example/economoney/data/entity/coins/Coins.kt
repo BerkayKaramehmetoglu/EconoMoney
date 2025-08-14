@@ -1,4 +1,4 @@
-package com.example.economoney.data.entity
+package com.example.economoney.data.entity.coins
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

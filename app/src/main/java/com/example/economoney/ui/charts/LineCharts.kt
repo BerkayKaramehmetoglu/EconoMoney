@@ -18,7 +18,7 @@ import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
 import co.yml.charts.ui.linechart.model.SelectionHighlightPopUp
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
 import com.example.economoney.R
-import com.example.economoney.data.entity.Coins
+import com.example.economoney.data.entity.coins.Coins
 import com.example.economoney.utils.Utils
 
 @Composable
@@ -57,14 +57,14 @@ fun LineCharts(coins: Coins, modifier: Modifier) {
 
 @Composable
 fun LineCharts(
-    coins: Coins,
+    sparkLine: List<String?>?,
     modifier: Modifier,
     color: Color,
     Ymin: (Float?) -> Unit,
     Ymax: (Float?) -> Unit
 ) {
 
-    val sparklineValues = coins.sparkline
+    val sparklineValues = sparkLine
         ?.filterNotNull()
         ?.mapIndexed { index, value ->
             Point(index.toFloat(), value.toFloat())

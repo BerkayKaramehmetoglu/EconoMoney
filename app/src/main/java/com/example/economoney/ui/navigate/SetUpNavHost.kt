@@ -5,33 +5,33 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.economoney.data.entity.Coins
 import com.example.economoney.ui.pages.DetailPage
 import com.example.economoney.ui.pages.HomePage
 import com.example.economoney.ui.pages.SettingsPage
 import com.example.economoney.ui.pages.TrendPage
+import com.example.economoney.viewmodels.DetailViewModel
 import com.example.economoney.viewmodels.HomeViewModel
 import com.example.economoney.viewmodels.TrendViewModel
-import kotlin.reflect.typeOf
 
 @Composable
 fun SetUpNavHost(
     navHostController: NavHostController,
     homeViewModel: HomeViewModel,
-    trendViewModel: TrendViewModel
+    trendViewModel: TrendViewModel,
+    detailViewModel: DetailViewModel
 ) {
     NavHost(navHostController, startDestination = Screens.Home.router) {
         composable(Screens.Home.router) {
             HomePage(navHostController = navHostController, homeViewModel = homeViewModel)
         }
 
-        composable<Screens.Detail>(
-            typeMap = mapOf(
-                typeOf<Coins>() to CustomNavType.CoinsType
-            )
-        ) {
+        composable<Screens.Detail> {
             val args = it.toRoute<Screens.Detail>()
-            DetailPage(args)
+            DetailPage(
+                args = args.uuid,
+                detailViewModel = detailViewModel,
+                homeViewModel = homeViewModel
+            )
         }
 
         composable(Screens.Trend.router) {
