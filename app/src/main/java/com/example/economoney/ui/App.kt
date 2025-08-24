@@ -20,8 +20,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
@@ -93,8 +93,7 @@ fun App(
 
     val navItemList = listOf(
         NavItem(label = "Home", Icons.Filled.Home, router = Screens.Home.router),
-        NavItem(label = "Trend", Icons.Filled.Star, router = Screens.Trend.router),
-        NavItem(label = "Settings", Icons.Filled.Settings, router = Screens.Settings.router)
+        NavItem(label = "Trend", Icons.Filled.Star, router = Screens.Trend.router)
     )
     val menuItemList = listOf(
         MenuItem(label = "1 Hours" to "1h"),

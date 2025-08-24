@@ -39,7 +39,13 @@ fun HomePage(
         items(coins) { coin ->
             val cleanedCoin = coin.copy(sparkline = coin.sparkline?.filterNotNull())
             if (coin.change != null && coin.price != null) {
-                Utils.ListOfCoins(navHostController, cleanedCoin, coin, coin.price, coin.change)
+                Utils.ListOfCoins(
+                    navHostController,
+                    cleanedCoin,
+                    coin,
+                    coin.price,
+                    coin.change
+                )
             }
         }
     }

@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.economoney.ui.pages.DetailPage
 import com.example.economoney.ui.pages.HomePage
-import com.example.economoney.ui.pages.SettingsPage
 import com.example.economoney.ui.pages.TrendPage
 import com.example.economoney.viewmodels.DetailViewModel
 import com.example.economoney.viewmodels.HomeViewModel
@@ -22,7 +21,10 @@ fun SetUpNavHost(
 ) {
     NavHost(navHostController, startDestination = Screens.Home.router) {
         composable(Screens.Home.router) {
-            HomePage(navHostController = navHostController, homeViewModel = homeViewModel)
+            HomePage(
+                navHostController = navHostController,
+                homeViewModel = homeViewModel
+            )
         }
 
         composable<Screens.Detail> {
@@ -40,10 +42,6 @@ fun SetUpNavHost(
                 trendViewModel = trendViewModel,
                 homeViewModel = homeViewModel
             )
-        }
-
-        composable(Screens.Settings.router) {
-            SettingsPage()
         }
     }
 }

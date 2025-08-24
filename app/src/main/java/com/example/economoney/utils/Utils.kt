@@ -121,17 +121,6 @@ object Utils {
                         fontSize = 18.sp
                     )
                 }
-                coin.rank?.let {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 16.dp),
-                        text = it.toString(),
-                        fontWeight = FontWeight.ExtraLight,
-                        color = colorResource(R.color.gray),
-                        textAlign = TextAlign.End
-                    )
-                }
             }
             Card(
                 colors = CardDefaults.cardColors(
@@ -139,7 +128,7 @@ object Utils {
                 ),
                 modifier = Modifier
                     .align(Alignment.End)
-                    .padding(end = 16.dp, bottom = 16.dp)
+                    .padding(end = 16.dp)
                     .fillMaxWidth(0.7f)
             ) {
                 Row(
@@ -189,6 +178,17 @@ object Utils {
                         }
                     }
                 }
+            }
+            coin.rank?.let {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    text = it.toString(),
+                    fontWeight = FontWeight.ExtraLight,
+                    color = colorResource(R.color.gray),
+                    textAlign = TextAlign.End
+                )
             }
         }
     }
